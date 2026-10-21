@@ -32,8 +32,16 @@ class HabitViewModel(private val repository: TrackerRepository) : ViewModel() {
     fun removeActivity(activityId: String) {
         viewModelScope.launch {
             val current = uiState.value
+            val updatedActivities = current.activities.filterNot { it.id == activityId }
+            val updatedCompletions = current.dailyCompletions.mapValues { (_, completedList) ->
+                completedList.filterNot { it == activityId }
+            }
+
             repository.saveProgress(
-                current.copy(activities = current.activities.filterNot { it.id == activityId })
+                current.copy(
+                    activities = updatedActivities,
+                    dailyCompletions = updatedCompletions
+                )
             )
         }
     }

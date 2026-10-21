@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 val viewModel: HabitViewModel = viewModel(factory = factory)
-
                 MainTrackerScreen(viewModel)
             }
         }

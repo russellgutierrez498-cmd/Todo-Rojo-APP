@@ -19,9 +19,9 @@ fun StatsScreen(viewModel: HabitViewModel) {
 
     val totalActividadesPosibles = state.activities.size
     var totalCompletadas = 0
-
+    val idsActivos = state.activities.map { it.id }
     state.dailyCompletions.values.forEach { completedList ->
-        totalCompletadas += completedList.size
+        totalCompletadas += completedList.count { it in idsActivos }
     }
 
     val porcentaje: Float = if (totalActividadesPosibles > 0) {
