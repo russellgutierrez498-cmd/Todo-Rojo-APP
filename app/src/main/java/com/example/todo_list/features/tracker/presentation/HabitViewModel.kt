@@ -18,12 +18,22 @@ class HabitViewModel(private val repository: TrackerRepository) : ViewModel() {
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = MonthProgress()
         )
+
     fun addActivity(name: String) {
         if (name.isBlank()) return
         viewModelScope.launch {
             val current = uiState.value
             repository.saveProgress(
                 current.copy(activities = current.activities + HabitActivity(name = name.trim()))
+            )
+        }
+    }
+
+    fun removeActivity(activityId: String) {
+        viewModelScope.launch {
+            val current = uiState.value
+            repository.saveProgress(
+                current.copy(activities = current.activities.filterNot { it.id == activityId })
             )
         }
     }
