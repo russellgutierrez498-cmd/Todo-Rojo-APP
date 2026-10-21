@@ -22,7 +22,6 @@ class TrackerRepository(private val context: Context) {
         if (jsonString != null) {
             gson.fromJson(jsonString, MonthProgress::class.java)
         } else {
-            // DATO SEMILLA (Carga inicial obligatoria por la rúbrica)
             MonthProgress(
                 activities = listOf(
                     HabitActivity(name = "Leer 20 mins"),
