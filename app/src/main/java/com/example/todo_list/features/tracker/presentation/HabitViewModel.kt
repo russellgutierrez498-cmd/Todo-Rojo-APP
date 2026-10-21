@@ -1,4 +1,4 @@
-package com.example.todo_list.features.tracker.presentation.viewmodel
+package com.example.todo_list.features.tracker.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
