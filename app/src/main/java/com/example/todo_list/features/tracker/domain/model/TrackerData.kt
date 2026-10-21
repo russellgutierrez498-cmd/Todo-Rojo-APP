@@ -1,4 +1,4 @@
-package com.example.todo_list
+package com.example.todo_list.features.tracker.domain.model
 
 import java.util.UUID
 
