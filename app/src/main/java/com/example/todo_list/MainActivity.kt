@@ -7,6 +7,10 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -20,6 +24,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.todo_list.features.tracker.data.repository.TrackerRepository
 import com.example.todo_list.features.tracker.presentation.HabitViewModel
 import com.example.todo_list.ui.theme.TodolistTheme
+import com.example.todo_list.features.tracker.presentation.MatrixScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -35,11 +40,38 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TodolistTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    ActivitiesScreen(viewModel)
+                var pestañaSeleccionada by remember { mutableIntStateOf(0) }
+
+                Scaffold(
+                    bottomBar = {
+                        NavigationBar(containerColor = Color.White) {
+                            NavigationBarItem(
+                                selected = pestañaSeleccionada == 0,
+                                onClick = { pestañaSeleccionada = 0 },
+                                icon = { Icon(Icons.Default.List, contentDescription = "Lista") },
+                                label = { Text("Actividades") }
+                            )
+                            NavigationBarItem(
+                                selected = pestañaSeleccionada == 1,
+                                onClick = { pestañaSeleccionada = 1 },
+                                icon = { Icon(Icons.Default.DateRange, contentDescription = "Matriz") },
+                                label = { Text("Progreso") }
+                            )
+                        }
+                    }
+                ) { paddingValues ->
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        if (pestañaSeleccionada == 0) {
+                            ActivitiesScreen(viewModel)
+                        } else {
+                            MatrixScreen(viewModel)
+                        }
+                    }
                 }
             }
         }
